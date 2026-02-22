@@ -1,19 +1,24 @@
 import React from 'react';
-import ToastContainer from '../ui/Toast'; // Hum apna custom toast use karenge
+import ToastContainer from '../ui/Toast';
 
 /**
  * 📱 APP CONTAINER
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ * Features:
+ * - Mobile frame logic
+ * - Custom Toast system integration
+ * - Safe area management
  */
 const AppContainer = ({ children }) => {
   return (
     <div className="app-root">
       <div className="mobile-frame">
+        {/* Main Screen Content */}
         <main className="app-content">
           {children}
         </main>
 
-        {/* ✅ Sirf hamara custom toast container yahan rahega */}
+        {/* 🍞 Custom Global Toast Layer (Build-safe) */}
         <ToastContainer />
       </div>
 
