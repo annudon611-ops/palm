@@ -1,0 +1,108 @@
+/* 
+ * 🔮 AI PALM READER - GLASSMORPHISM UTILITIES
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ * 
+ * Purpose: Creates the premium "frosted glass" look.
+ * Usage: Add these classes to divs/cards to apply the effect.
+ */
+
+/* 🧊 Base Glass Effect */
+.glass-base {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* 🃏 Standard Card (Used in Grids) */
+.glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-card:active {
+  transform: scale(0.98);
+}
+
+/* ✨ Premium/Active Card (Glowing) */
+.glass-card.active,
+.glass-card:hover {
+  border-color: rgba(79, 172, 254, 0.4); /* Cyan Glow */
+  box-shadow: 0 0 20px rgba(79, 172, 254, 0.15),
+              inset 0 0 20px rgba(79, 172, 254, 0.05);
+}
+
+/* 🪟 Modal / Bottom Sheet Panel */
+.glass-panel {
+  background: rgba(15, 15, 26, 0.85); /* Darker for readability */
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* 🔘 Glass Button */
+.glass-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.glass-button:active {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(1px);
+}
+
+/* 💬 Chat Bubble (Sent) */
+.glass-bubble-sent {
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.2) 0%, rgba(0, 242, 254, 0.2) 100%);
+  border: 1px solid rgba(79, 172, 254, 0.3);
+  backdrop-filter: blur(8px);
+  color: white;
+}
+
+/* 💬 Chat Bubble (Received) */
+.glass-bubble-received {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  color: var(--color-text-secondary);
+}
+
+/* 🔮 Input Fields */
+.glass-input {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: var(--color-accent-secondary);
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.1);
+}
+
+/* 🌟 Neon Text Glow */
+.text-glow {
+  text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+}
+
+.text-glow-purple {
+  text-shadow: 0 0 10px rgba(118, 75, 162, 0.5);
+}
