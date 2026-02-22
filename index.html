@@ -2,95 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    
-    <!-- 📱 Mobile Viewport Configuration -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    
-    <!-- 🎨 PWA Theme Colors -->
     <meta name="theme-color" content="#0f0f1a" />
-    <meta name="background-color" content="#0f0f1a" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    
-    <!-- 🖼️ Icons & Manifest -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    
-    <!-- 🔤 Typography: Outfit (Headings) & Inter (Body) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    
-    <!-- 📝 Metadata -->
-    <title>AI Palm Reader – Tarot & Astrology Guidance</title>
-    <meta name="description" content="Discover your destiny with AI-powered palm reading, tarot spreads, and daily cosmic guidance." />
-    
-    <!-- 🚀 Splash Screen Styles (Immediate Load) -->
+    <title>AI Palm Reader</title>
     <style>
-      body {
-        margin: 0;
-        padding: 0;
-        background-color: #0f0f1a;
-        color: #ffffff;
-        font-family: 'Inter', sans-serif;
-        overflow-x: hidden;
-        -webkit-tap-highlight-color: transparent;
-      }
-      
-      #root {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        min-height: 100dvh; /* Mobile viewport fix */
-      }
-
-      /* Simple loader for initial mount */
+      body { margin: 0; background-color: #0f0f1a; font-family: sans-serif; }
       #initial-loader {
-        position: fixed;
-        inset: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #0f0f1a;
-        z-index: 9999;
-        transition: opacity 0.5s ease-out;
+        position: fixed; inset: 0; display: flex; flex-direction: column; 
+        justify-content: center; align-items: center;
+        background: #0f0f1a; z-index: 9999; transition: opacity 0.5s ease;
       }
-      
-      .pulsing-orb {
-        width: 60px;
-        height: 60px;
-        background: radial-gradient(circle at 30% 30%, #4facfe, #00f2fe);
-        border-radius: 50%;
-        box-shadow: 0 0 30px rgba(0, 242, 254, 0.6);
+      .orb {
+        width: 60px; height: 60px; border-radius: 50%;
+        background: radial-gradient(circle, #4facfe, #00f2fe);
+        box-shadow: 0 0 30px #00f2fe;
         animation: pulse 2s infinite ease-in-out;
       }
-      
-      @keyframes pulse {
-        0% { transform: scale(0.8); opacity: 0.7; }
-        50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 50px rgba(0, 242, 254, 0.8); }
-        100% { transform: scale(0.8); opacity: 0.7; }
-      }
+      @keyframes pulse { 0%, 100% { transform: scale(0.8); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 1; } }
     </style>
   </head>
   <body>
-    <!-- ⚛️ React Root -->
     <div id="root"></div>
-
-    <!-- ⏳ Fallback Loader (Visible until React hydrates) -->
     <div id="initial-loader">
-      <div class="pulsing-orb"></div>
+      <div class="orb"></div>
+      <p style="color: rgba(255,255,255,0.5); margin-top: 20px; font-size: 14px;">Aligning with Stars...</p>
     </div>
-
-    <!-- 🔌 Entry Point -->
     <script type="module" src="/src/main.jsx"></script>
-    
-    <!-- 🛑 NoScript Fallback -->
-    <noscript>
-      <div style="padding: 20px; text-align: center; color: white;">
-        <h1>JavaScript Required</h1>
-        <p>Please enable JavaScript to use the AI Palm Reader.</p>
-      </div>
-    </noscript>
   </body>
 </html>
