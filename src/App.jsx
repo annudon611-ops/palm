@@ -6,8 +6,7 @@ import AppContainer from './components/layout/AppContainer';
 import ScreenWrapper from './components/layout/ScreenWrapper';
 import LoadingSpinner from './components/ui/LoadingSpinner';
 
-// 😴 Lazy Load Screens (Better Performance)
-// We use lazy loading so the initial bundle is smaller
+// 😴 Lazy Load Screens
 const SplashScreen = lazy(() => import('./screens/SplashScreen'));
 const LanguageScreen = lazy(() => import('./screens/LanguageScreen'));
 const OnboardingScreen = lazy(() => import('./screens/OnboardingScreen'));
@@ -17,7 +16,6 @@ const PalmScanScreen = lazy(() => import('./screens/PalmScanScreen'));
 const PalmResultScreen = lazy(() => import('./screens/PalmResultScreen'));
 const AIPalmChatScreen = lazy(() => import('./screens/AIPalmChatScreen'));
 const TarotScreen = lazy(() => import('./screens/TarotScreen'));
-const TarotCategoryScreen = lazy(() => import('./screens/TarotCategoryScreen'));
 const TarotReadingScreen = lazy(() => import('./screens/TarotReadingScreen'));
 const DailyGuidanceScreen = lazy(() => import('./screens/DailyGuidanceScreen'));
 const HoroscopeScreen = lazy(() => import('./screens/HoroscopeScreen'));
@@ -27,14 +25,9 @@ const SettingsScreen = lazy(() => import('./screens/SettingsScreen'));
 const PrivacyPolicyScreen = lazy(() => import('./screens/PrivacyPolicyScreen'));
 const AboutScreen = lazy(() => import('./screens/AboutScreen'));
 
-/**
- * 🧭 Main Navigator Component
- * Decides which screen to render based on current state
- */
 const MainNavigator = () => {
   const { currentScreen, direction } = useNavigationContext();
 
-  // 🗺️ Screen Registry
   const renderScreen = () => {
     switch (currentScreen) {
       case 'Splash': return <SplashScreen />;
@@ -46,7 +39,6 @@ const MainNavigator = () => {
       case 'PalmResult': return <PalmResultScreen />;
       case 'AIPalmChat': return <AIPalmChatScreen />;
       case 'Tarot': return <TarotScreen />;
-      case 'TarotCategory': return <TarotCategoryScreen />;
       case 'TarotReading': return <TarotReadingScreen />;
       case 'DailyGuidance': return <DailyGuidanceScreen />;
       case 'Horoscope': return <HoroscopeScreen />;
@@ -55,13 +47,13 @@ const MainNavigator = () => {
       case 'Settings': return <SettingsScreen />;
       case 'PrivacyPolicy': return <PrivacyPolicyScreen />;
       case 'About': return <AboutScreen />;
-      default: return <SplashScreen />; // Fallback
+      default: return <SplashScreen />;
     }
   };
 
   return (
     <AppContainer>
-      <Suspense fallback={<div className="flex-center h-screen"><LoadingSpinner /></div>}>
+      <Suspense fallback={<div style={{height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0f0f1a'}}><LoadingSpinner /></div>}>
         <ScreenWrapper key={currentScreen} direction={direction}>
           {renderScreen()}
         </ScreenWrapper>
@@ -70,12 +62,7 @@ const MainNavigator = () => {
   );
 };
 
-/**
- * 🚀 Root App Component
- * Provides global state contexts
- */
 const App = () => {
-  // Prevent context menu (right click) for app-like feel
   useEffect(() => {
     const handleContextMenu = (e) => e.preventDefault();
     document.addEventListener('contextmenu', handleContextMenu);
