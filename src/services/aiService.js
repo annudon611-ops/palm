@@ -1,15 +1,15 @@
 const BASE_URL = "https://openrouter.ai/api/v1/chat/completions";
 const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 
-// Maine yahan models ko simplify kiya hai taaki error na aaye
 const MODELS = {
-  VISION: "google/gemini-flash-1.5-8b", // Ye zyada fast aur stable hai vision ke liye
+  // Is model ko OpenRouter pe sabse zyada stability milti hai vision ke liye
+  VISION: "google/gemini-flash-1.5-8b", 
   REASONING: "meta-llama/llama-3.2-3b-instruct:free" 
 };
 
 export const analyzePalmImage = async (base64Image, language, userName) => {
   if (!API_KEY) {
-    console.error("API KEY IS MISSING!");
+    alert("Bhai, Vercel Settings mein API Key add karna bhool gaya shayad!");
     throw new Error("API Key missing");
   }
 
@@ -18,7 +18,9 @@ export const analyzePalmImage = async (base64Image, language, userName) => {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${API_KEY}`,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://palm-bhwt.vercel.app", // Domain fix
+        "X-Title": "AI Palm Reader"
       },
       body: JSON.stringify({
         model: MODELS.VISION,
@@ -26,21 +28,35 @@ export const analyzePalmImage = async (base64Image, language, userName) => {
           {
             role: "user",
             content: [
-              { type: "text", text: "Analyze this palm for spiritual guidance. Identify Heart, Head, and Life lines." },
-              { type: "image_url", image_url: { url: base64Image } }
+              {
+                type: "text",
+                text: `Analyze this palm in ${language} for ${userName}. Focus on Heart, Head, and Life lines. Keep it spiritual, poetic, and long.`
+              },
+              {
+                type: "image_url",
+                image_url: {
+                  url: base64Image // Direct base64 support
+                }
+              }
             ]
           }
-        ]
+        ],
+        temperature: 0.7
       })
     });
 
     const data = await response.json();
-    if (data.error) throw new Error(data.error.message);
+    
+    if (data.error) {
+      console.error("AI Error:", data.error.message);
+      throw new Error(data.error.message);
+    }
+
     return data.choices[0].message.content;
   } catch (error) {
-    console.error("Vision Error:", error);
+    console.error("Fetch Error:", error);
     throw error;
   }
 };
 
-// ... baaki functions ko aise hi rehne do
+// ... baaki chat function ko mat chhedna, wo sahi chal raha hai
