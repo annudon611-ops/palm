@@ -7,26 +7,27 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      // Isse build fail nahi hogi agar icons missing hain toh
+      // Manual manifest to avoid glob errors
       manifest: {
         name: 'AI Palm Reader',
         short_name: 'OracleAI',
-        description: 'Mystical AI Palm Reading & Astrology',
         theme_color: '#0f0f1a',
         background_color: '#0f0f1a',
         display: 'standalone',
+        icons: [
+          { src: 'favicon.svg', sizes: '192x192', type: 'image/svg+xml' }
+        ]
       },
       workbox: {
-        // Broad patterns taaki error na aaye
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-        cleanupOutdatedCaches: true,
-        maximumFileSizeToCacheInBytes: 3000000 // 3MB limit
+        // Build ko force-pass karne ke liye
+        globPatterns: [], 
+        runtimeCaching: [{
+          urlPattern: ({ request }) => request.destination === 'document',
+          handler: 'NetworkFirst',
+          options: { cacheName: 'html-cache' }
+        }]
       }
     })
   ],
-  build: {
-    outDir: 'dist',
-    sourcemap: false,
-    chunkSizeWarningLimit: 2000
-  }
+  build: { outDir: 'dist', sourcemap: false }
 });
