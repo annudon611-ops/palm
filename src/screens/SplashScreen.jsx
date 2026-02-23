@@ -21,76 +21,23 @@ const SplashScreen = () => {
       } else {
         replace('Home');
       }
-    }, 4000); // 4 seconds for a premium feel
-
+    }, 3500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [hasCompletedOnboarding, isProfileComplete, replace]);
 
   return (
-    <div className="premium-splash">
+    <div style={{ height: '100vh', width: '100%', background: '#030308', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
       <CosmicBackground />
-      
-      <div className="splash-content">
-        <div className="logo-aura">
+      <div style={{ zIndex: 10, textAlign: 'center' }}>
+        <div style={{ filter: 'drop-shadow(0 0 20px #00f2fe)', animation: 'pulse 2s infinite ease-in-out' }}>
           <SplashLogo />
         </div>
-        
-        <div className="text-reveal">
-          <h1 className="brand-name">ORACLE AI</h1>
-          <div className="divider"></div>
-          <p className="tagline">Your Destiny, Decoded</p>
-        </div>
-
-        <div className="loading-container">
-          <div className="shimmer-bar"></div>
-        </div>
+        <h1 style={{ color: '#fff', fontFamily: 'Outfit, sans-serif', letterSpacing: '0.4em', marginTop: '20px', fontSize: '1.8rem' }}>ORACLE AI</h1>
+        <div style={{ height: '1px', width: '100px', background: 'linear-gradient(90deg, transparent, #00f2fe, transparent)', margin: '15px auto' }}></div>
+        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Decoding Your Destiny</p>
       </div>
-
       <style>{`
-        .premium-splash {
-          height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center;
-          background: #05050a; overflow: hidden; position: relative;
-        }
-        .splash-content { z-index: 10; display: flex; flex-direction: column; align-items: center; }
-        
-        .logo-aura {
-          filter: drop-shadow(0 0 30px rgba(0, 242, 254, 0.4));
-          animation: logoFloat 4s infinite ease-in-out;
-          margin-bottom: 40px;
-        }
-
-        .brand-name {
-          font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 800;
-          letter-spacing: 0.4em; color: white; margin: 0;
-          animation: textFadeUp 1.5s ease-out both;
-        }
-
-        .divider {
-          height: 1px; width: 40px; background: linear-gradient(90deg, transparent, #00f2fe, transparent);
-          margin: 15px 0; animation: expandLine 2s ease-in-out forwards;
-        }
-
-        .tagline {
-          font-family: 'Inter', sans-serif; font-size: 0.8rem; color: rgba(255,255,255,0.4);
-          text-transform: uppercase; letter-spacing: 0.3em;
-          animation: textFadeUp 1.5s ease-out 0.5s both;
-        }
-
-        .loading-container {
-          position: absolute; bottom: 80px; width: 200px; height: 2px;
-          background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden;
-        }
-
-        .shimmer-bar {
-          height: 100%; width: 50%;
-          background: linear-gradient(90deg, transparent, #00f2fe, transparent);
-          animation: shimmer 2s infinite linear;
-        }
-
-        @keyframes logoFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        @keyframes textFadeUp { from { opacity: 0; transform: translateY(20px); filter: blur(10px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
-        @keyframes expandLine { from { width: 0; } to { width: 60px; } }
-        @keyframes shimmer { from { transform: translateX(-150%); } to { transform: translateX(150%); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } }
       `}</style>
     </div>
   );
