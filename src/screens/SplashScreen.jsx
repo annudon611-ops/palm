@@ -1,145 +1,96 @@
 import React, { useEffect } from 'react';
 import { useNavigationContext } from '../context/NavigationContext';
 import { useUser } from '../context/UserContext';
-import { theme } from '../styles/theme';
 import SplashLogo from '../components/splash/SplashLogo';
 import CosmicBackground from '../components/splash/CosmicBackground';
 
-/**
- * 🔮 SPLASH SCREEN
- * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- * Features:
- * - Animated Cosmic Background
- * - Pulsing Palm/Mystic Logo
- * - Auto-routing logic based on user state
- */
 const SplashScreen = () => {
   const { replace } = useNavigationContext();
   const { hasCompletedOnboarding, isProfileComplete } = useUser();
 
   useEffect(() => {
-    // ⏱️ Hold splash for 3 seconds to allow assets to load and create mood
     const timer = setTimeout(() => {
-      determineNextScreen();
-    }, 3000);
+      const isFirstTime = !localStorage.getItem('app_initialized');
+      if (isFirstTime) {
+        localStorage.setItem('app_initialized', 'true');
+        replace('Language');
+      } else if (!hasCompletedOnboarding) {
+        replace('Onboarding');
+      } else if (!isProfileComplete) {
+        replace('ProfileSetup');
+      } else {
+        replace('Home');
+      }
+    }, 4000); // 4 seconds for a premium feel
 
     return () => clearTimeout(timer);
   }, []);
 
-  /**
-   * 🗺️ ROUTING LOGIC
-   * Decide where the user goes next
-   */
-  const determineNextScreen = () => {
-    const isFirstTime = !localStorage.getItem('app_initialized');
-
-    if (isFirstTime) {
-      localStorage.setItem('app_initialized', 'true');
-      replace('Language'); // 1. Select Language first
-    } else if (!hasCompletedOnboarding) {
-      replace('Onboarding'); // 2. Show features
-    } else if (!isProfileComplete) {
-      replace('ProfileSetup'); // 3. Get user details
-    } else {
-      replace('Home'); // 4. Direct to Dashboard
-    }
-  };
-
   return (
-    <div className="splash-container">
-      {/* 🌌 Animated Stars and Nebulas */}
+    <div className="premium-splash">
       <CosmicBackground />
-
+      
       <div className="splash-content">
-        {/* 🖐️ Pulsing Mystic Logo */}
-        <SplashLogo />
+        <div className="logo-aura">
+          <SplashLogo />
+        </div>
         
-        <div className="splash-text-area">
-          <h1 className="splash-title">AI PALM READER</h1>
-          <p className="splash-subtitle">Consult the Universe within you</p>
+        <div className="text-reveal">
+          <h1 className="brand-name">ORACLE AI</h1>
+          <div className="divider"></div>
+          <p className="tagline">Your Destiny, Decoded</p>
         </div>
 
-        {/* 🪄 Subtle loading indicator at the bottom */}
-        <div className="splash-footer">
-          <div className="loading-bar">
-            <div className="loading-progress"></div>
-          </div>
+        <div className="loading-container">
+          <div className="shimmer-bar"></div>
         </div>
       </div>
 
       <style>{`
-        .splash-container {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: ${theme.colors.background.primary};
-          overflow: hidden;
+        .premium-splash {
+          height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center;
+          background: #05050a; overflow: hidden; position: relative;
+        }
+        .splash-content { z-index: 10; display: flex; flex-direction: column; align-items: center; }
+        
+        .logo-aura {
+          filter: drop-shadow(0 0 30px rgba(0, 242, 254, 0.4));
+          animation: logoFloat 4s infinite ease-in-out;
+          margin-bottom: 40px;
         }
 
-        .splash-content {
-          z-index: 10;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
+        .brand-name {
+          font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 800;
+          letter-spacing: 0.4em; color: white; margin: 0;
+          animation: textFadeUp 1.5s ease-out both;
         }
 
-        .splash-text-area {
-          margin-top: 30px;
-          animation: fadeInUp 1s ease-out 0.5s both;
+        .divider {
+          height: 1px; width: 40px; background: linear-gradient(90deg, transparent, #00f2fe, transparent);
+          margin: 15px 0; animation: expandLine 2s ease-in-out forwards;
         }
 
-        .splash-title {
-          font-family: 'Outfit', sans-serif;
-          font-size: 2rem;
-          font-weight: 700;
-          letter-spacing: 0.2em;
-          color: white;
-          text-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
-          margin-bottom: 8px;
+        .tagline {
+          font-family: 'Inter', sans-serif; font-size: 0.8rem; color: rgba(255,255,255,0.4);
+          text-transform: uppercase; letter-spacing: 0.3em;
+          animation: textFadeUp 1.5s ease-out 0.5s both;
         }
 
-        .splash-subtitle {
-          font-family: 'Inter', sans-serif;
-          font-size: 0.9rem;
-          color: rgba(255, 255, 255, 0.6);
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
+        .loading-container {
+          position: absolute; bottom: 80px; width: 200px; height: 2px;
+          background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden;
         }
 
-        .splash-footer {
-          position: absolute;
-          bottom: 60px;
-          width: 120px;
+        .shimmer-bar {
+          height: 100%; width: 50%;
+          background: linear-gradient(90deg, transparent, #00f2fe, transparent);
+          animation: shimmer 2s infinite linear;
         }
 
-        .loading-bar {
-          height: 2px;
-          width: 100%;
-          background: rgba(255, 255, 255, 0.1);
-          border-radius: 2px;
-          overflow: hidden;
-        }
-
-        .loading-progress {
-          height: 100%;
-          width: 0%;
-          background: ${theme.colors.gradients.primary};
-          animation: loadProgress 2.5s ease-in-out forwards;
-        }
-
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes loadProgress {
-          0% { width: 0%; }
-          100% { width: 100%; }
-        }
+        @keyframes logoFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes textFadeUp { from { opacity: 0; transform: translateY(20px); filter: blur(10px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+        @keyframes expandLine { from { width: 0; } to { width: 60px; } }
+        @keyframes shimmer { from { transform: translateX(-150%); } to { transform: translateX(150%); } }
       `}</style>
     </div>
   );
